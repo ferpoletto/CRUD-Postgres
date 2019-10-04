@@ -1,13 +1,15 @@
-from CRUD_Postgres.livro import *
+from livro import Livro
+
 
 def menu():
     op = int(input('MENU\n'
                    '=-=-=-=-=-=-=-=-=-=-=-=-\n'
                    '1 - CADASTRO\n'
-                   '2 - MOSTRAR \n'
+                   '2 - MOSTRAR TUDO \n'
                    '3 - ATUALIZAR\n'
                    '4 - DELETAR \n'
-                   '5 - SAIR\n'
+                   '5 - BUSCAR UM\n'
+                   '6 - SAIR\n'
                    '=-=-=-=-=-=-=-=-=-=-=-=-\n'
                    'DIGITE A OPÇÃO DESEJADA: '))
     return op
@@ -15,45 +17,41 @@ def menu():
 l = Livro()
 
 while True:
+
     op = menu()
 
     if op == 1:
-        print('Cadastrar!')
+        print('CADASTRAR!')
         autor = input("Digite o autor: ")
         tipo = input("Digite o tipo: ")
 
         l.cadastrar(autor, tipo)
 
     elif op == 2:
-        print('Mostrar!')
-        find = input("Digite o nome do autor para buscar:")
+        print('Mostrar TUDO!')
 
-        print(l.mostrar(find))
+        l.mostrar_tudo()
 
     elif op == 3:
         print('Editar')
-        editar = input("Digite o nome do autor para editar: ")
+        editar = input("Digite o ID do autor para editar: ")
+        autor = input("Digite novo nome do autor: ")
+        tipo = input("Digite o novo tipo: ")
 
-        flag = l.existe(editar)
-        if flag == 1:
-            autor = input("Digite o nome do autor novo: ")
-            tipo = input("Digite o tipo novo: ")
-            l.editar(editar, autor, tipo)
-        else:
-            op = input("Autor não encontrado. Deseja cadastrar? S/N").strip().upper()[0]
-            if op == 'S':
-                print('Cadastrar!')
-                autor = input("Digite o autor: ")
-                tipo = input("Digite o tipo: ")
-                l.cadastrar(autor, tipo)
+        l.atualizar(editar, autor, tipo)
 
     elif op == 4:
         print('Deletar')
-        delete = input("Digite o autor para deletar: ")
+        delete = input("Digite o ID do autor para deletar: ")
 
         l.deletar(delete)
 
     elif op == 5:
+        print('Find One')
+        find = int(input("Digite o ID: "))
+        l.find_one(find)
+
+    elif op == 6:
         print("Finalizando...")
         break
 
